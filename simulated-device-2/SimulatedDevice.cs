@@ -23,7 +23,7 @@ namespace simulated_device
         private readonly static string s_connectionString = "HostName=Team3Hub.azure-devices.net;DeviceId=Team3DotnetDevice;SharedAccessKey=ybbWIm9mWhhI66W8j4YtFCWrWOoJlIvCyKWMy7GdrAM=";
         private readonly static string s_connectionString2 = "HostName=Team3Hub.azure-devices.net;DeviceId=Team3DotnetDevice2;SharedAccessKey=Uc3v/uYNX/qwlLaFdEJtlDZcRX7NkFUTK7//PEox2GA=";
 
-        private static int s_telemetryInterval = 1; // Seconds
+        private static int s_telemetryInterval = 5; // Seconds
 
         // Handle the direct method call
         private static Task<MethodResponse> SetTelemetryInterval(MethodRequest methodRequest, object userContext)
@@ -87,13 +87,13 @@ namespace simulated_device
 
             // Connect to the IoT hub using the MQTT protocol
             s_deviceClient = DeviceClient.CreateFromConnectionString(s_connectionString, TransportType.Mqtt);
-       
+
             s_deviceClient2 = DeviceClient.CreateFromConnectionString(s_connectionString2, TransportType.Mqtt);
 
             // Create a handler for the direct method call
             s_deviceClient.SetMethodHandlerAsync("SetTelemetryInterval", SetTelemetryInterval, null).Wait();
             SendDeviceToCloudMessagesAsync(s_deviceClient,"Bebe 1");
-         
+
             // Create a handler for the direct method call
             s_deviceClient2.SetMethodHandlerAsync("SetTelemetryInterval", SetTelemetryInterval, null).Wait();
             SendDeviceToCloudMessagesAsync(s_deviceClient2,"Bebe 2");
